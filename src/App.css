@@ -1,0 +1,91 @@
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+  /* Optional: line height for spacing */
+  line-height: 1.4em;
+  height: calc(1.4em * 3);
+}
+
+/* .homePage{
+  background: var(--color-primary); */
+  /* background: radial-gradient(circle farthest-corner at center center, #e9e7f7 0%, #1d0f6b 40%, #2c245a 60%, #0a013d 100%); */
+  /* background-image: radial-gradient(
+    circle at center in hsl shorter hue,
+    rgb(252, 252, 252),
+    rgb(2, 2, 32)
+  );
+
+} */
+
+
+/* loader animation */
+.takniki{
+  animation: m 1s infinite;
+}
+@keyframes m{
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 0.5;
+  }
+}
+
+.ninja{
+  animation: p 1s infinite;
+}
+@keyframes p{
+  0%{
+    opacity: 0.5;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0.5;
+  }
+}
+
+.web{
+  animation: k 1s infinite;
+}
+@keyframes k{
+  0%{
+    opacity: 0.5;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.a{
+  color: #9786f573;
+}
+
+.inputBox{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: full;
+}
+.input-field{
+  border: 2px solid #0404ff;
+  width: 70% ;
+  outline: none;
+  border-radius: 5px;
+}
+.input-field:hover,
+.input-field:focus {
+  border-color: #032288;
+  outline: none;
+  box-shadow: none;
+}
