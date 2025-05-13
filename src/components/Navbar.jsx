@@ -2,12 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import { Tooltip } from "@mui/material";
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 export const Navbar = () => {
   return (
     <>
       <nav className="flex justify-between items-center p-[15px_30px] bg-primary text-white">
-        <div className="text-2xl font-bold">Takniki Ninja</div>
+        <div className="text-2xl font-bold">Takniki Niga</div>
         <ul className="list-none flex gap-5">
           <li>
             <NavLink
@@ -21,12 +22,12 @@ export const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/sourse-code"
+              to="/source-code"
               className={({ isActive }) =>
                 isActive ? "activeLink" : "navLinks"
               }
             >
-              Sourse Code
+              Source Code
             </NavLink>
           </li>
           <li>
@@ -60,7 +61,7 @@ export const Navbar = () => {
             </NavLink>
           </li>
           <Tooltip title="Login">
-            <li className="px-5 rounded-xl pb-1 border-2 border-border-color">
+            <li className="px-2 rounded-xl pb-1 border-2 border-border-color">
               <NavLink
                 to="/login"
                 className={({ isActive }) =>
@@ -68,6 +69,18 @@ export const Navbar = () => {
                 }
               >
                 <LoginIcon />
+              </NavLink>
+            </li>
+          </Tooltip>
+          <Tooltip title="Registration">
+            <li className="px-2 rounded-xl pb-1 border-2 border-border-color">
+              <NavLink
+                to="/registration"
+                className={({ isActive }) =>
+                  isActive ? "activeLink" : "navLinks"
+                }
+              >
+                <AppRegistrationIcon />
               </NavLink>
             </li>
           </Tooltip>

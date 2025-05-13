@@ -1,11 +1,13 @@
 import React from "react";
 import { CourseCard } from "../components/ChildCourseCard";
 import { useSelector } from "react-redux";
+import { Navbar } from "../components/Navbar";
 
 export const CoursesPage = () => {
   const { courseData } = useSelector((state) => state.root);
   return (
     <>
+      <Navbar />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6 text-center">
           Available Courses

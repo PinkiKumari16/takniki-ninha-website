@@ -10,7 +10,7 @@ import { BlogPage } from "./pages/BlogPage";
 import { ContactPage } from "./pages/ContactPage";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { SourseCodePage } from "./pages/SourseCodePage";
+import { SourceCodePage } from "./pages/SourceCodePage";
 import { BlogDetailPage } from "./pages/BlogDetailPage";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -22,9 +22,10 @@ import {
 } from "./redux/rootSlice";
 import { Loader } from "./components/Loader";
 import { Login } from "./pages/Login";
+import { RegistrationPage } from "./pages/RegistrationPage";
 
 function App() {
-  const { loading } = useSelector((state) => state.root);
+  const { loading, blogData, courseData} = useSelector((state) => state.root);
   const dispatch = useDispatch();
   // console.log(blogData);
 
@@ -66,25 +67,28 @@ function App() {
   };
 
   useEffect(() => {
-    getInitialData();
+    if(!(blogData.length && courseData.length)){
+      getInitialData();
+    }
   }, []);
 
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
         {loading ? <Loader /> : null}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/courses" element={<CoursesPage />} />
-          <Route path="/sourse-code" element={<SourseCodePage />} />
+          <Route path="/source-code" element={<SourceCodePage />} />
           <Route path="/courses/:courseId" element={<CourseDetailPage />} />
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:blogId" element={<BlogDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<RegistrationPage />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );

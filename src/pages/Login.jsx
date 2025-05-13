@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,8 +46,11 @@ export const Login = () => {
           >
             Submit
           </button>
+          <p className="text-center text-blue-600 hover:text-primary cursor-pointer underline" onClick={()=>navigate('/registration')}>Don't have an account? Register here</p>
         </form>
+        
       </div>
+      
     </div>
   );
 };

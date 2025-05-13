@@ -5,6 +5,7 @@ import { hideLoading, showLoading } from "../redux/rootSlice";
 import axios from "axios";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Navbar } from "../components/Navbar";
 
 export const CourseDetailPage = () => {
   const { courseId } = useParams();
@@ -36,6 +37,7 @@ export const CourseDetailPage = () => {
 
   return (
     <>
+      <Navbar />
       {course && (
         <div className="container mx-auto px-6 py-10 space-y-10">
           {/* Course Overview */}

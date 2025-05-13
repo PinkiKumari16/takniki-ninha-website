@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/rootSlice";
 import { Loader } from "../components/Loader";
+import { Navbar } from "../components/Navbar";
 
 export const BlogDetailPage = () => {
   const { blogId } = useParams();
@@ -33,6 +34,7 @@ export const BlogDetailPage = () => {
 
   return (
     <>
+      <Navbar />
       {!contentData ? (
         <Loader />
       ) : (
