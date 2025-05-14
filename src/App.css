@@ -10,17 +10,6 @@
   height: calc(1.4em * 3);
 }
 
-/* .homePage{
-  background: var(--color-primary); */
-  /* background: radial-gradient(circle farthest-corner at center center, #e9e7f7 0%, #1d0f6b 40%, #2c245a 60%, #0a013d 100%); */
-  /* background-image: radial-gradient(
-    circle at center in hsl shorter hue,
-    rgb(252, 252, 252),
-    rgb(2, 2, 32)
-  );
-
-} */
-
 
 /* loader animation */
 .takniki{

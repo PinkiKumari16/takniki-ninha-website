@@ -9,7 +9,7 @@ export const CoursesSlider = () => {
 
   return (
     <div className="container mx-auto px-4 py-10 cursor-pointer">
-      <h1 className="text-3xl font-bold text-center mb-10">
+      <h1 className="text-3xl text-border-color font-bold text-center mb-10">
         Available Courses
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -17,7 +17,7 @@ export const CoursesSlider = () => {
           <div
             key={course.id}
             onClick={() => navigate("/courses")}
-            className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            className="shadow-lg shadow-border-color border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
             <div className="relative">
               <img
@@ -32,22 +32,22 @@ export const CoursesSlider = () => {
             </div>
 
             <div className="p-5 space-y-2">
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold text-primary">
                 {course.title}
               </h2>
-              <p className="text-sm text-gray-600">{course.description}</p>
+              <p className="text-sm text-gray-700">{course.description}</p>
 
               <div className="flex flex-wrap items-center text-sm text-gray-700 gap-5">
                 <span>👨‍🏫 By {course.instructor}</span>
                 <span>🔍 {course.level}</span>
               </div>
 
-              <div className="flex items-center text-sm text-gray-700 gap-8">
+              <div className="flex items-center text-sm text-gray-700 font-semibold gap-8">
                 <span>⏰ {course.duration}</span>
                 <span>🎓 {course.lessons} Lessons</span>
               </div>
 
-              <div className="text-md font-semibold text-blue-600">
+              <div className="text-xl font-bold text-border-color">
                 ${course.discounted_price}
                 {
                   <span className="ml-2 text-sm text-gray-500 line-through">
@@ -57,7 +57,7 @@ export const CoursesSlider = () => {
               </div>
 
               {/* View Course Button */}
-              <button className="mt-3 w-full bg-blue-600 hover:bg-blue-900 text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer">
+              <button className="mt-3 w-full bg-border-color hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer">
                 View Course
               </button>
             </div>

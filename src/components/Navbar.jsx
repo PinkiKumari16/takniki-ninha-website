@@ -1,75 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import CloseIcon from "@mui/icons-material/Close";
 import { Tooltip } from "@mui/material";
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 export const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Source Code", path: "/source-code" },
+    { name: "Courses", path: "/courses" },
+    { name: "Blog", path: "/blogs" },
+    { name: "About", path: "/about" },
+    { name: "Contact Us", path: "/contact" },
+  ];
+
   return (
-    <>
-      <nav className="flex justify-between items-center p-[15px_30px] bg-primary text-white">
+    <nav className="bg-primary text-white shadow-md fixed top-0 left-0 w-full z-50">
+      <div className="flex justify-between items-center p-4 h-16">
         <div className="text-2xl font-bold">Takniki Niga</div>
-        <ul className="list-none flex gap-5">
-          <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? "activeLink" : "navLinks"
-              }
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/source-code"
-              className={({ isActive }) =>
-                isActive ? "activeLink" : "navLinks"
-              }
-            >
-              Source Code
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/courses"
-              className={({ isActive }) =>
-                isActive ? "activeLink" : "navLinks"
-              }
-            >
-              Courses
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/blogs"
-              className={({ isActive }) =>
-                isActive ? "activeLink" : "navLinks"
-              }
-            >
-              Blog
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive ? "activeLink" : "navLinks"
-              }
-            >
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive ? "activeLink" : "navLinks"
-              }
-            >
-              Contact Us
-            </NavLink>
-          </li>
+
+        {/* Toggle button (mobile only) */}
+        <div className="md:hidden">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <CloseIcon /> : <MenuOpenIcon />}
+          </button>
+        </div>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex gap-4 items-center">
+          {navLinks.map((link) => (
+            <li key={link.name}>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) =>
+                  isActive ? "activeLink" : "navLinks"
+                }
+              >
+                {link.name}
+              </NavLink>
+            </li>
+          ))}
           <Tooltip title="Login">
             <li className="px-2 rounded-xl pb-1 border-2 border-border-color">
               <NavLink
@@ -95,7 +69,56 @@ export const Navbar = () => {
             </li>
           </Tooltip>
         </ul>
-      </nav>
-    </>
+
+        {/* Mobile Menu Slide Drawer */}
+        <div
+          className={`fixed top-16 right-0 bg-primary text-white z-50 p-6 transform transition-transform duration-300 ease-in-out text-sm ${
+            menuOpen ? "translate-x-0" : "translate-x-full"
+          } md:hidden`}
+        >
+          <ul className="flex flex-col gap-6">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <NavLink
+                  to={link.path}
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    isActive ? "activeLink block" : "navLinks block"
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              </li>
+            ))}
+            <li>
+              <NavLink
+                to="/login"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "activeLink flex items-center gap-2"
+                    : "navLinks flex items-center gap-2"
+                }
+              >
+                <LoginIcon /> Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/registration"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "activeLink flex items-center gap-2"
+                    : "navLinks flex items-center gap-2"
+                }
+              >
+                <AppRegistrationIcon /> Register
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
