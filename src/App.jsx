@@ -23,6 +23,7 @@ import {
 import { Loader } from "./components/Loader";
 import { Login } from "./pages/Login";
 import { RegistrationPage } from "./pages/RegistrationPage";
+import { AboutPage } from "./pages/AboutPage";
 
 function App() {
   const { loading, blogData, courseData} = useSelector((state) => state.root);
@@ -85,6 +86,7 @@ function App() {
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:blogId" element={<BlogDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<RegistrationPage />} />
         </Routes>
