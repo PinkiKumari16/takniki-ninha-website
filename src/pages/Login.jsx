@@ -18,7 +18,7 @@ export const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-primary border-2 border-border-color">
-      <div className="bg-white p-8 rounded-lg shadow-lg shadow-white w-full max-w-sm ">
+      <div className="bg-white p-8 rounded-lg shadow-lg shadow-white w-9/10 max-w-sm ">
         <h2 className="text-2xl font-bold mb-6 text-center">User Login</h2>
         <hr className="border border-primary mb-10" />
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -42,15 +42,18 @@ export const Login = () => {
           />
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300 cursor-pointer"
+            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
           >
             Submit
           </button>
-          <p className="text-center text-blue-600 hover:text-primary cursor-pointer underline" onClick={()=>navigate('/registration')}>Don't have an account? Register here</p>
+          <p
+            className="text-center text-blue-600 hover:text-primary cursor-pointer underline"
+            onClick={() => navigate("/registration")}
+          >
+            Don't have an account? Register here
+          </p>
         </form>
-        
       </div>
-      
     </div>
   );
 };

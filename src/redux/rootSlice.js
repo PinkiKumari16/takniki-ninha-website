@@ -6,6 +6,7 @@ const rootSlice = createSlice({
     courseData: [],
     loading: false,
     isReloadData: false,
+    alertData:{},
   },
   reducers: {
     showLoading: (state, action) => {
@@ -23,6 +24,9 @@ const rootSlice = createSlice({
     setReloadData: (state, action) => {
       state.isReloadData = action.payload;
     },
+    setAlertData: (state, action) => {
+      state.alertData = action.payload;
+    },
   },
 });
 
@@ -33,4 +37,5 @@ export const {
   setBlogData,
   setReloadData,
   setCourseData,
+  setAlertData,
 } = rootSlice.actions;

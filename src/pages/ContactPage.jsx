@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import blogImage from "/blog1.png";
 import { Navbar } from "../components/Navbar";
+import { initiatePayment } from "../utils/paymentUtils";
+import { useDispatch } from "react-redux";
 
 export const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ export const ContactPage = () => {
     message: "",
     price: "",
   });
+  const[isSubmitting, setSubmitting] = useState(false)
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +27,11 @@ export const ContactPage = () => {
 
   const handleContactDetails = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    setSubmitting(true)
+    // console.log("Form Data:", formData);
+
+    initiatePayment(dispatch, formData.queryCharge)
+
     setFormData({
       name: "",
       email: "",
@@ -33,12 +41,13 @@ export const ContactPage = () => {
       message: "",
       price: "",
     });
+    setSubmitting(false)
   };
 
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen bg-primary">
+      <div className="flex mt-16 items-center justify-center min-h-screen bg-primary">
         <div className="flex bg-white rounded-lg shadow-lg overflow-hidden">
           <img
             src={blogImage}
@@ -119,9 +128,10 @@ export const ContactPage = () => {
               />
               <button
                 type="submit"
-                className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300 cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
               >
-                Submit
+                {isSubmitting ? "Submitting...": "Submit"}
               </button>
             </form>
           </div>

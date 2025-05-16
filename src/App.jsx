@@ -8,8 +8,6 @@ import { CoursesPage } from "./pages/CoursesPage";
 import { CourseDetailPage } from "./pages/CourseDetailPage";
 import { BlogPage } from "./pages/BlogPage";
 import { ContactPage } from "./pages/ContactPage";
-import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/Footer";
 import { SourceCodePage } from "./pages/SourceCodePage";
 import { BlogDetailPage } from "./pages/BlogDetailPage";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,11 +17,13 @@ import {
   setBlogData,
   showLoading,
   setCourseData,
+  setAlertData,
 } from "./redux/rootSlice";
 import { Loader } from "./components/Loader";
 import { Login } from "./pages/Login";
 import { RegistrationPage } from "./pages/RegistrationPage";
 import { AboutPage } from "./pages/AboutPage";
+import { GlobalAlert } from "./components/GlobalAlert";
 
 function App() {
   const { loading, blogData, courseData} = useSelector((state) => state.root);
@@ -61,7 +61,10 @@ function App() {
       dispatch(setBlogData(blogRes.data.blogs));
       dispatch(setCourseData(courseRes.data.courses));
     } catch (error) {
-      alert("Error fetching data: " + error.message);
+      dispatch(setAlertData({
+        type: 'error',
+        message: "Error fetching data: " + error.message
+      }))
     } finally {
       dispatch(hideLoading());
     }
@@ -76,7 +79,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {/* <Navbar /> */}
+        <GlobalAlert />
         {loading ? <Loader /> : null}
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -89,6 +92,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<RegistrationPage />} />
+
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

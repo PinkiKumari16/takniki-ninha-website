@@ -35,7 +35,9 @@ export const CoursesSlider = () => {
               <h2 className="text-lg font-semibold text-primary">
                 {course.title}
               </h2>
-              <p className="text-sm text-gray-700">{course.description}</p>
+              <p className="text-sm text-gray-700 line-clamp-3">
+                {course.description}
+              </p>
 
               <div className="flex flex-wrap items-center text-sm text-gray-700 gap-5">
                 <span>👨‍🏫 By {course.instructor}</span>
@@ -57,8 +59,8 @@ export const CoursesSlider = () => {
               </div>
 
               {/* View Course Button */}
-              <button className="mt-3 w-full bg-border-color hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer">
-                View Course
+              <button className="mt-3 w-full bg-border-color hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded">
+                View Details
               </button>
             </div>
           </div>

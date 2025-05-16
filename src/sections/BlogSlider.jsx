@@ -40,7 +40,7 @@ export const BlogSlider = () => {
                 {blog.short_description}
               </p>
 
-              <button className="mt-4 w-full bg-blue-600 hover:bg-blue-900 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 cursor-pointer">
+              <button className="mt-4 w-full bg-blue-600 hover:bg-blue-900 text-white font-semibold py-2 px-4 rounded transition-colors duration-300">
                 View More
               </button>
             </div>

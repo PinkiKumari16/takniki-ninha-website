@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from '@mui/material/Alert';
+import { useDispatch} from "react-redux";
+import { setAlertData } from "../redux/rootSlice";
 
 export const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -11,9 +12,8 @@ export const RegistrationPage = () => {
   });
 
   const [registeredUsers, setRegisteredUsers] = useState([]);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,36 +27,46 @@ export const RegistrationPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     const { name, email, password, confirmPassword } = formData;
 
     if (!isStrongPassword(password)) {
-      setError(
-        "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+      dispatch(
+        setAlertData({
+          type: "error",
+          message:
+            "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
+        })
       );
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      dispatch(
+        setAlertData({
+          type: "error",
+          message: "Passwords do not match.",
+        })
+      );
       return;
     }
 
     // Simulate saving user
     setRegisteredUsers((prev) => [...prev, { name, email }]);
-    setSuccess("Registration successful!");
+    dispatch(
+      setAlertData({
+        type: "success",
+        message: "Registration successful!",
+      })
+    );
+
     setFormData({
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
     });
-    setTimeout(()=>{
-        navigate("/login");
-    },2000)
-    
+    navigate("/login");
   };
 
   return (
@@ -66,12 +76,6 @@ export const RegistrationPage = () => {
           User Registration
         </h2>
         <hr className="border border-primary mb-6" />
-
-        {error && (<Alert severity="error">{error}</Alert>)}
-        {success && (<>
-            <Alert severity="success">{success}</Alert>
-            
-        </>)}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -112,7 +116,7 @@ export const RegistrationPage = () => {
           />
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300 cursor-pointer"
+            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
           >
             Register
           </button>

@@ -2,14 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { hideLoading, showLoading } from "../redux/rootSlice";
+import { hideLoading, setAlertData, showLoading } from "../redux/rootSlice";
 import { Loader } from "../components/Loader";
 import { Navbar } from "../components/Navbar";
+import ShareIcon from "@mui/icons-material/Share";
+import { Tooltip, IconButton, Snackbar } from "@mui/material";
 
 export const BlogDetailPage = () => {
   const { blogId } = useParams();
   const [contentData, setContentData] = useState(null);
-  console.log(contentData);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  // console.log(contentData);
   const dispatch = useDispatch();
 
   const getBlogContent = async () => {
@@ -22,7 +25,10 @@ export const BlogDetailPage = () => {
         setContentData(response.data.contents[0]);
       }
     } catch (error) {
-      alert(error);
+      dispatch(setAlertData({
+        type:'error',
+        message: error
+      }))
     } finally {
       dispatch(hideLoading());
     }
@@ -31,6 +37,20 @@ export const BlogDetailPage = () => {
   useEffect(() => {
     getBlogContent();
   }, [blogId]);
+
+  const handleShareClick = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        setOpenSnackbar(true);
+      })
+      .catch((err) => {
+        dispatch(setAlertData({
+          type:'error',
+          message: err
+        }))
+      });
+  };
 
   return (
     <>
@@ -47,14 +67,46 @@ export const BlogDetailPage = () => {
               className="h-80 w-full object-cover rounded"
             />
 
+           
             {/* Blog Header Info */}
-            <div>
-              <p className="py-2 px-1 border-l-4 border-light-gray pl-4 italic text-lg">
+            <div className="mb-6">
+              <p className="py-2 px-4 border-l-4 border-gray-300 italic text-xl text-gray-50">
                 "{contentData.section_title}"
               </p>
-              <div className="flex justify-between text-sm text-gray-300">
-                <p>by Pinki</p>
-                <p>Created: {contentData.created_at.split(" ")[0]}</p>
+
+              <div className="flex justify-between items-center text-sm text-gray-50 mt-2 px-2 py-3 rounded-md shadow-sm">
+                <p className="font-medium">by Pinki</p>
+
+                <div className="flex items-center gap-4">
+                  <p className="text-gray-50">
+                    Created: {contentData.created_at.split(" ")[0]}
+                  </p>
+
+                  {/* Snackbar */}
+                  <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={3000}
+                    onClose={() => setOpenSnackbar(false)}
+                    message="Link copied to clipboard!"
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                  />
+
+                  {/* Share Icon */}
+                  <Tooltip title="Share this Course">
+                    <IconButton
+                      onClick={handleShareClick}
+                      className="hover:scale-110 transition-transform"
+                    >
+                      <ShareIcon
+                        className="text-blue-600"
+                        style={{ fontSize: "2rem" }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                </div>
               </div>
             </div>
 

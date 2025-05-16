@@ -15,9 +15,12 @@ export const ChildBlogCard = ({
   };
 
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+    <div
+      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden shadow-border-color cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* Blog Image */}
-      <div onClick={handleCardClick} className="cursor-pointer relative">
+      <div className="relative">
         <img
           className="w-full h-48 object-cover"
           src={`https://abhinash.itflyweb.cloud/api/${image_path}`}
@@ -43,7 +46,7 @@ export const ChildBlogCard = ({
         {/* View Button */}
         <button
           onClick={handleCardClick}
-          className="w-full mt-4 bg-blue-600 hover:bg-blue-900 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 cursor-pointer"
+          className="w-full mt-4 bg-blue-600 hover:bg-blue-900 text-white font-semibold py-2 px-4 rounded transition-colors duration-300"
         >
           View More Details
         </button>

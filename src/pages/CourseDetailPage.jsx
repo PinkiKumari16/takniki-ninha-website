@@ -1,84 +1,99 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { hideLoading, showLoading } from "../redux/rootSlice";
+import { hideLoading, setAlertData, showLoading } from "../redux/rootSlice";
 import axios from "axios";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Navbar } from "../components/Navbar";
+import ShareIcon from "@mui/icons-material/Share";
+import { Tooltip, IconButton, Alert } from "@mui/material";
+import { initiatePayment } from "../utils/paymentUtils";
 
 export const CourseDetailPage = () => {
   const { courseId } = useParams();
   const dispatch = useDispatch();
   const [course, setCourse] = useState(null);
-  const [openSectionId, setOpenSectionId] = useState(null); // For collapsible sections
-
-  const getOneCourseData = async () => {
-    try {
-      dispatch(showLoading());
-      const res = await axios.get(
-        `https://abhinash.itflyweb.cloud/api/getCourseDetails.php?course_id=${courseId}`
-      );
-      if (res.status === 200) {
-        setCourse(res.data);
-      } else {
-        console.log(res.statusText);
-      }
-    } catch (error) {
-      alert(error);
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+  const [openSectionId, setOpenSectionId] = useState(null);
+  const [activeVideoUrl, setActiveVideoUrl] = useState(null);
+  const [activeLectureTitle, setActiveLectureTitle] = useState(null);
 
   useEffect(() => {
+    const getOneCourseData = async () => {
+      try {
+        dispatch(showLoading());
+        const res = await axios.get(
+          `https://abhinash.itflyweb.cloud/api/getCourseDetails.php?course_id=${courseId}`
+        );
+        if (res.status === 200) {
+          setCourse(res.data);
+        } else {
+          dispatch(setAlertData({ type: "error", message: res.statusText }));
+        }
+      } catch (error) {
+        dispatch(
+          setAlertData({
+            type: "error",
+            message: "Failed to fetch course data: " + error.message,
+          })
+        );
+      } finally {
+        dispatch(hideLoading());
+      }
+    };
+
     getOneCourseData();
   }, [courseId]);
+
+  const handleShareClick = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        dispatch(
+          setAlertData({
+            type: "success",
+            message: "✅ Link copied to clipboard!",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          setAlertData({
+            type: "error",
+            message: "❌ Failed to copy link: " + err.message,
+          })
+        );
+      });
+  };
+
+  
 
   return (
     <>
       <Navbar />
       {course && (
-        <div className="container mx-auto px-6 py-10 space-y-10">
+        <div className="container mx-auto md:px-6 py-10 space-y-10 mt-16">
           {/* Course Overview */}
           <div className="bg-primary text-white border border-gray-200 rounded-lg shadow-lg p-6">
-            <h1 className="text-3xl font-extrabold mb-4">{course.title}</h1>
-            <p className="text-lg text-gray-300 mb-6">{course.description}</p>
-
-            {/* Instructor & Language */}
+            <h1 className="text-2xl md:text-3xl font-extrabold mb-4">
+              {course.title}
+            </h1>
+            <p className="md:text-lg text-gray-300 mb-6">
+              {course.description}
+            </p>
             <div className="flex flex-wrap text-sm text-gray-300 gap-6">
-              <span className="flex items-center gap-2">
-                <span role="img" aria-label="Instructor">
-                  👨‍🏫
-                </span>{" "}
-                {course.instructor}
-              </span>
-              <span className="flex items-center gap-2">
-                <span role="img" aria-label="Language">
-                  🌐
-                </span>{" "}
-                {course.language}
-              </span>
-              <span className="flex items-center gap-2">
-                <span role="img" aria-label="Duration">
-                  ⏰
-                </span>{" "}
-                {course.duration}
-              </span>
-              <span className="flex items-center gap-2">
-                <span role="img" aria-label="Lessons">
-                  📚
-                </span>{" "}
-                {course.lessons} lessons
-              </span>
+              <span>👨‍🏫 {course.instructor}</span>
+              <span>🌐 {course.language}</span>
+              <span>⏰ {course.duration}</span>
+              <span>📚 {course.lessons} lessons</span>
             </div>
           </div>
 
           {/* Course Content Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Left: Course Sections */}
+            {/* Left Section */}
             <div className="md:col-span-2 space-y-8">
-              <div className="bg-white border border-gray-200 rounded-lg shadow p-6">
+              <div className="bg-white border rounded-lg shadow p-6">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                   Course Sections
                 </h2>
@@ -87,18 +102,15 @@ export const CourseDetailPage = () => {
                   {course.sections.map((section) => {
                     const isOpen = openSectionId === section.id;
                     return (
-                      <li
-                        key={section.id}
-                        className="border border-gray-200 rounded-lg"
-                      >
+                      <li key={section.id} className="border rounded-lg">
                         <button
                           onClick={() =>
                             setOpenSectionId(isOpen ? null : section.id)
                           }
-                          className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 text-left"
+                          className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100"
                         >
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-800">
+                            <h3 className="text-lg font-semibold">
                               {section.section_title}
                             </h3>
                             <p className="text-sm text-gray-500">
@@ -116,8 +128,18 @@ export const CourseDetailPage = () => {
                                 key={idx}
                                 className="text-gray-700 text-sm flex justify-between py-5 cursor-pointer hover:text-blue-600"
                               >
-                                <strong>▶️ {lecture.lecture_title}</strong>
-                                {lecture.duration}
+                                <a
+                                  onClick={() => {
+                                    setActiveVideoUrl(lecture.videoUrl);
+                                    setActiveLectureTitle(
+                                      lecture.lecture_title
+                                    );
+                                  }}
+                                  className="flex-1 cursor-pointer"
+                                >
+                                  <strong>▶️ {lecture.lecture_title}</strong>
+                                </a>
+                                <span>{lecture.duration}</span>
                               </li>
                             ))}
                           </ul>
@@ -127,11 +149,45 @@ export const CourseDetailPage = () => {
                   })}
                 </ul>
               </div>
+
+              {/* VIDEO PLAYER AREA */}
+              {activeVideoUrl && (
+                <div className="relative mt-6">
+                  <div
+                    className="aspect-w-16 aspect-h-9"
+                    onContextMenu={(e) => e.preventDefault()}
+                  >
+                    <iframe
+                      src={
+                        activeVideoUrl.includes("watch?v=")
+                          ? activeVideoUrl.replace("watch?v=", "embed/") +
+                            "?modestbranding=1&rel=0&controls=1&disablekb=1&fs=0&showinfo=0"
+                          : activeVideoUrl
+                      }
+                      title="Lecture Video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full border rounded-lg"
+                      sandbox="allow-scripts allow-same-origin allow-presentation"
+                    ></iframe>
+                  </div>
+
+                  {/* Lecture Name */}
+                  <div className="text-sm text-gray-700 mt-2 text-center font-semibold">
+                    {activeLectureTitle}
+                  </div>
+
+                  {/* Security Notice */}
+                  <div className="text-xs text-gray-500 mt-1 text-center italic">
+                    Right-click is disabled. Streaming is protected.
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Right: Thumbnail and Pricing Info */}
+            {/* Right Section */}
             <div className="space-y-6">
-              <div className="bg-white border border-gray-200 rounded-lg shadow p-6 space-y-8">
+              <div className="bg-white border rounded-lg shadow p-6 space-y-8">
                 {/* Thumbnail */}
                 <div className="bg-gray-200 rounded-lg overflow-hidden">
                   <img
@@ -141,24 +197,38 @@ export const CourseDetailPage = () => {
                   />
                 </div>
 
-                {/* Price Info */}
+                {/* Price & Button */}
                 <div className="space-y-4">
-                  <div className="text-3xl font-bold text-blue-600">
-                    ₹{course.discounted_price}
-                    <span className="text-xl text-gray-500 line-through ml-2">
-                      ₹{course.original_price}
-                    </span>
+                  <div className="flex justify-between text-3xl font-bold text-blue-600">
+                    <div>
+                      ₹{course.discounted_price}
+                      <span className="text-xl text-gray-500 line-through ml-2">
+                        ₹{course.original_price}
+                      </span>
+                    </div>
+                    <Tooltip title="Share this Course">
+                      <IconButton onClick={handleShareClick}>
+                        <ShareIcon className="text-blue-600 hover:scale-110 transition-transform" />
+                      </IconButton>
+                    </Tooltip>
                   </div>
-                  <button className="text-xl font-bold w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-900 cursor-pointer">
+
+                  <button
+                    className="text-xl font-bold w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-900"
+                    onClick={() =>
+                      initiatePayment(dispatch, course.discounted_price)
+                    }
+                  >
                     Buy Now
                   </button>
-                  <p className="text-gray-500 mt-2 text-center">
+
+                  <p className="text-gray-500 text-center">
                     Purchase this course to get lifetime access.
                   </p>
                 </div>
 
                 {/* Course Stats */}
-                <div className="space-y-2 text-gray-700">
+                <div className="text-gray-700">
                   <h4 className="font-semibold text-lg">
                     This course includes:
                   </h4>

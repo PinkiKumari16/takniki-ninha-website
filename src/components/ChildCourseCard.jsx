@@ -17,7 +17,7 @@ export const CourseCard = ({
   const navigate = useNavigate();
   return (
     <div
-      className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+      className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow shadow-border-color duration-300 cursor-pointer"
       onClick={() => navigate("/courses/" + courseId)}
     >
       <div className="relative">
@@ -34,7 +34,7 @@ export const CourseCard = ({
       {/* Course Details */}
       <div className="p-5 space-y-2">
         <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-        <p className="text-sm text-gray-600">{shortDescription}</p>
+        <p className="text-sm text-gray-600 line-clamp-3">{shortDescription}</p>
 
         <div className="flex flex-wrap items-center text-sm text-gray-700 gap-2">
           <span>👨‍🏫 By {createdBy || "Instructor"}</span>
@@ -54,7 +54,7 @@ export const CourseCard = ({
           </span>
         </div>
 
-        <button className="mt-3 w-full bg-blue-600 hover:bg-blue-900 text-white text-sm font-semibold py-2 px-4 rounded cursor-pointer">
+        <button className="mt-3 w-full bg-blue-600 hover:bg-blue-900 text-white text-sm font-semibold py-2 px-4 rounded">
           View More Details
         </button>
       </div>

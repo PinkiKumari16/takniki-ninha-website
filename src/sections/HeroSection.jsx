@@ -8,7 +8,7 @@ export const HeroSection = () => {
         <p className="md:text-lg mb-5">
           Learn to code with simple tutorials and hands-on examples.
         </p>
-        <button className="py-1 md:py-2 px-5 md:text-lg bg-[#1f2937] text-white border-none cursor-pointer rounded-md hover:bg-[#111827]">
+        <button className="py-1 md:py-2 px-5 md:text-lg bg-[#1f2937] text-white border-none rounded-md hover:bg-[#111827]">
           Start Learning
         </button>
       </section>
