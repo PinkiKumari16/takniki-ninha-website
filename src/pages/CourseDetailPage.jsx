@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Navbar } from "../components/Navbar";
 import ShareIcon from "@mui/icons-material/Share";
-import { Tooltip, IconButton, Alert } from "@mui/material";
+import { Tooltip, IconButton} from "@mui/material";
 import { initiatePayment } from "../utils/paymentUtils";
 
 export const CourseDetailPage = () => {
@@ -15,8 +15,6 @@ export const CourseDetailPage = () => {
   const dispatch = useDispatch();
   const [course, setCourse] = useState(null);
   const [openSectionId, setOpenSectionId] = useState(null);
-  const [activeVideoUrl, setActiveVideoUrl] = useState(null);
-  const [activeLectureTitle, setActiveLectureTitle] = useState(null);
 
   useEffect(() => {
     const getOneCourseData = async () => {
@@ -130,10 +128,10 @@ export const CourseDetailPage = () => {
                               >
                                 <a
                                   onClick={() => {
-                                    setActiveVideoUrl(lecture.videoUrl);
-                                    setActiveLectureTitle(
-                                      lecture.lecture_title
-                                    );
+                                    // setActiveVideoUrl(lecture.videoUrl);
+                                    // setActiveLectureTitle(
+                                    //   lecture.lecture_title
+                                    // );
                                   }}
                                   className="flex-1 cursor-pointer"
                                 >
@@ -149,40 +147,6 @@ export const CourseDetailPage = () => {
                   })}
                 </ul>
               </div>
-
-              {/* VIDEO PLAYER AREA */}
-              {activeVideoUrl && (
-                <div className="relative mt-6">
-                  <div
-                    className="aspect-w-16 aspect-h-9"
-                    onContextMenu={(e) => e.preventDefault()}
-                  >
-                    <iframe
-                      src={
-                        activeVideoUrl.includes("watch?v=")
-                          ? activeVideoUrl.replace("watch?v=", "embed/") +
-                            "?modestbranding=1&rel=0&controls=1&disablekb=1&fs=0&showinfo=0"
-                          : activeVideoUrl
-                      }
-                      title="Lecture Video"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full border rounded-lg"
-                      sandbox="allow-scripts allow-same-origin allow-presentation"
-                    ></iframe>
-                  </div>
-
-                  {/* Lecture Name */}
-                  <div className="text-sm text-gray-700 mt-2 text-center font-semibold">
-                    {activeLectureTitle}
-                  </div>
-
-                  {/* Security Notice */}
-                  <div className="text-xs text-gray-500 mt-1 text-center italic">
-                    Right-click is disabled. Streaming is protected.
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Right Section */}

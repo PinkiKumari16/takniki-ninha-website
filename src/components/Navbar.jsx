@@ -5,6 +5,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import CloseIcon from "@mui/icons-material/Close";
 import { Tooltip } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,6 +66,18 @@ export const Navbar = () => {
                 }
               >
                 <AppRegistrationIcon />
+              </NavLink>
+            </li>
+          </Tooltip>
+          <Tooltip title="User Profile">
+            <li>
+              <NavLink
+                to="/user-profile/jiur877"
+                className={({ isActive }) =>
+                  isActive ? "activeLink" : "navLinks"
+                }
+              >
+                <AccountCircleIcon />
               </NavLink>
             </li>
           </Tooltip>

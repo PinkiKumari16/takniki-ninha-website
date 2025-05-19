@@ -16,7 +16,7 @@ export const ChildBlogCard = ({
 
   return (
     <div
-      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden shadow-border-color cursor-pointer"
+      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden shadow-border-color cursor-pointer"
       onClick={handleCardClick}
     >
       {/* Blog Image */}

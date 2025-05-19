@@ -56,7 +56,7 @@ export const SocialStats = () => {
         {platforms.map((platform, index) => (
           <div
             key={index}
-            className="bg-gray-100 p-8 rounded-xl shadow-md hover:shadow-lg transition flex flex-col items-center shadow-border-color"
+            className="bg-gray-100 p-8 rounded-xl hover:shadow-md transition flex flex-col items-center shadow-border-color"
           >
             {platform.icon}
             <p className="text-lg text-gray-600 mb-1 font-medium">

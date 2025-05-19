@@ -17,7 +17,7 @@ export const CourseCard = ({
   const navigate = useNavigate();
   return (
     <div
-      className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow shadow-border-color duration-300 cursor-pointer"
+      className="bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow shadow-border-color duration-300 cursor-pointer"
       onClick={() => navigate("/courses/" + courseId)}
     >
       <div className="relative">

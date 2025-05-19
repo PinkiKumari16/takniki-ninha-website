@@ -24,6 +24,8 @@ import { Login } from "./pages/Login";
 import { RegistrationPage } from "./pages/RegistrationPage";
 import { AboutPage } from "./pages/AboutPage";
 import { GlobalAlert } from "./components/GlobalAlert";
+import { UserProfilePage } from "./pages/UserProfilePage";
+import { SourceDetailPage } from "./pages/SourceDetailPage";
 
 function App() {
   const { loading, blogData, courseData} = useSelector((state) => state.root);
@@ -85,6 +87,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/source-code" element={<SourceCodePage />} />
+          <Route path="/source-code/:sourceCodeId" element={<SourceDetailPage />} />
           <Route path="/courses/:courseId" element={<CourseDetailPage />} />
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:blogId" element={<BlogDetailPage />} />
@@ -92,6 +95,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/user-profile/:userId" element={<UserProfilePage />} />
 
         </Routes>
         {/* <Footer /> */}
