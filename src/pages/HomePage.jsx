@@ -31,6 +31,7 @@ export const HomePage = () => {
       <CoursesSlider />
       <BlogSlider />
       <SourceCodeSlider />
+      
       <Footer />
     </>
   );
