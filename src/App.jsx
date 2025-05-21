@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import "./App.css";
@@ -26,31 +26,13 @@ import { AboutPage } from "./pages/AboutPage";
 import { GlobalAlert } from "./components/GlobalAlert";
 import { UserProfilePage } from "./pages/UserProfilePage";
 import { SourceDetailPage } from "./pages/SourceDetailPage";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import { ReviewForm } from "./components/ReviewForm";
 
 function App() {
-  const { loading, blogData, courseData} = useSelector((state) => state.root);
+  const { loading, blogData, courseData } = useSelector((state) => state.root);
   const dispatch = useDispatch();
-  // console.log(blogData);
-
-  // const getAllBlogData = async () => {
-  //   try {
-  //     dispatch(showLoading());
-  //     const res = await axios.get(
-  //       "https://abhinash.itflyweb.cloud/api/getBlog.php"
-  //     );
-  //     dispatch(setBlogData(res.data.blogs));
-
-  //   } catch (error) {
-  //     alert(error);
-  //   }finally{
-  //     dispatch(hideLoading());
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getAllBlogData();
-  // }, []);
-
+  const [isReviewFormShow, setIsReviewFormShow] = useState(false);
   const getInitialData = async () => {
     try {
       dispatch(showLoading());
@@ -63,17 +45,19 @@ function App() {
       dispatch(setBlogData(blogRes.data.blogs));
       dispatch(setCourseData(courseRes.data.courses));
     } catch (error) {
-      dispatch(setAlertData({
-        type: 'error',
-        message: "Error fetching data: " + error.message
-      }))
+      dispatch(
+        setAlertData({
+          type: "error",
+          message: "Error fetching data: " + error.message,
+        })
+      );
     } finally {
       dispatch(hideLoading());
     }
   };
 
   useEffect(() => {
-    if(!(blogData.length && courseData.length)){
+    if (!(blogData.length && courseData.length)) {
       getInitialData();
     }
   }, []);
@@ -87,7 +71,10 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/source-code" element={<SourceCodePage />} />
-          <Route path="/source-code/:sourceCodeId" element={<SourceDetailPage />} />
+          <Route
+            path="/source-code/:sourceCodeId"
+            element={<SourceDetailPage />}
+          />
           <Route path="/courses/:courseId" element={<CourseDetailPage />} />
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:blogId" element={<BlogDetailPage />} />
@@ -96,9 +83,25 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/user-profile/:userId" element={<UserProfilePage />} />
-
         </Routes>
         {/* <Footer /> */}
+        <div
+          className="fixed bottom-5 right-5 text-blue-600 p-5 bg-gray-200 shadow-2xl shadow-border-color rounded-full"
+          onClick={() => setIsReviewFormShow(!isReviewFormShow)}
+        >
+          <RateReviewIcon
+            style={{
+              fontSize: "3rem", // large size
+              animation: "zoomInOut 1.5s infinite ease-in-out",
+              cursor: "pointer",
+              zIndex: 1000,
+            }}
+            titleAccess="Write a Review "
+          />
+        </div>
+        {isReviewFormShow && (
+          <ReviewForm setIsReviewFormShow={setIsReviewFormShow} />
+        )}
       </BrowserRouter>
     </>
   );
