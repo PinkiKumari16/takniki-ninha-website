@@ -25,39 +25,18 @@ const reviews = [
     label: "Our Best Software",
   },
   {
-    rating: "★★★★☆",
-    reviewText:
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem.",
+    rating: "★★★★★",
+    reviewText: "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
     reviewerName: "D",
-    reviewerTitle: "Product Designer",
+    reviewerTitle: "Software Engineer",
     label: "Our Best Software",
   },
   {
     rating: "★★★★★",
-    reviewText: "Fusce dignissim pretium consectetur.",
+    reviewText:
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco im veniam, quis nostrud exercitation ullamco im veniam, quis nostrud exercitation ullamco im veniam, quis nostrud exercitation ullamco im veniam, quis nostrud exercitation ullamco.",
     reviewerName: "E",
-    reviewerTitle: "Data Scientist",
-    label: "Our Best Course",
-  },
-  {
-    rating: "★★★☆☆",
-    reviewText: "Nulla facilisi. Integer lacinia sollicitudin massa.",
-    reviewerName: "F",
-    reviewerTitle: "UX Designer",
-    label: "Our Best Blog",
-  },
-  {
-    rating: "★★★★★",
-    reviewText: "Pellentesque viverra nibh eu efficitur.",
-    reviewerName: "G",
-    reviewerTitle: "CTO",
-    label: "Our Best Course",
-  },
-  {
-    rating: "★★★★☆",
-    reviewText: "Suspendisse potenti. Proin ut massa nec elit.",
-    reviewerName: "H",
-    reviewerTitle: "HR Manager",
+    reviewerTitle: "Software Engineer",
     label: "Our Best Software",
   },
 ];
@@ -65,18 +44,25 @@ const reviews = [
 export const ReviewsSection = () => {
   const [startIndex, setStartIndex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setStartIndex((prev) => (prev + 1) % reviews.length); // Move 5 ahead
-    }, 5000); // Every 5s
+  const totalToShow = 4;
 
-    return () => clearInterval(timer);
+  useEffect(() => {
+    if (reviews.length > totalToShow) {
+      const timer = setInterval(() => {
+        setStartIndex((prev) => (prev + 1) % reviews.length);
+      }, 5000);
+
+      return () => clearInterval(timer);
+    }
   }, []);
 
-  // ✅ Get 5 reviews and wrap around using modulo
-  const reviewsToShow = Array.from({ length: 4 }, (_, i) => {
-    return reviews[(startIndex + i) % reviews.length];
-  });
+  const reviewsToShow =
+    reviews.length > totalToShow
+      ? Array.from({ length: totalToShow }, (_, i) => {
+          const index = (startIndex + i) % reviews.length;
+          return reviews[index];
+        })
+      : reviews;
 
   return (
     <section
@@ -91,7 +77,10 @@ export const ReviewsSection = () => {
       </h1>
 
       <div className="flex items-center gap-2 justify-center w-full px-4">
-        <PeopleReviews reviewsToShow={reviewsToShow} />
+        <PeopleReviews
+          reviewsToShow={reviewsToShow}
+          totalreviews={reviews.length}
+        />
       </div>
     </section>
   );

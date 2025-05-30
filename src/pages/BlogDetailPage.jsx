@@ -58,7 +58,7 @@ export const BlogDetailPage = () => {
       {!contentData ? (
         <Loader />
       ) : (
-        <div className="bg-primary flex justify-center px-4 py-10">
+        <div className="bg-primary flex justify-center px-4 py-10 mt-10">
           <div className="w-full max-w-4xl flex flex-col gap-6 text-white overflow-hidden break-words">
             {/* Blog Image */}
             <img

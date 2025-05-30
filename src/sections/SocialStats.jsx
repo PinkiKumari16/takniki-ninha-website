@@ -47,7 +47,7 @@ export const SocialStats = () => {
   ];
 
   return (
-    <div className="bg-white text-center py-16 px-4">
+    <div className="bg-[#d9e1f7] text-center py-16 px-4">
       <h2 className="text-2xl md:text-3xl md:text-4xl font-bold text-gray-800 mb-12">
         Connect with Us on Social Media!
       </h2>
@@ -56,7 +56,7 @@ export const SocialStats = () => {
         {platforms.map((platform, index) => (
           <div
             key={index}
-            className="bg-gray-100 p-8 rounded-xl hover:shadow-md transition flex flex-col items-center shadow-border-color"
+            className="bg-white p-8 rounded-xl hover:shadow-md transition flex flex-col items-center shadow-border-color"
           >
             {platform.icon}
             <p className="text-lg text-gray-600 mb-1 font-medium">
