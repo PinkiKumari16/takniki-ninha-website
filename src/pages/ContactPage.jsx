@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import blogImage from "/blog1.png";
+// import blogImage from "/blog1.png";
 import { Navbar } from "../components/Navbar";
 import { initiatePayment } from "../utils/paymentUtils";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ export const ContactPage = () => {
     message: "",
     price: "",
   });
-  const[isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -27,10 +27,10 @@ export const ContactPage = () => {
 
   const handleContactDetails = (e) => {
     e.preventDefault();
-    setSubmitting(true)
+    setSubmitting(true);
     // console.log("Form Data:", formData);
 
-    initiatePayment(dispatch, formData.queryCharge)
+    initiatePayment(dispatch, formData.queryCharge);
 
     setFormData({
       name: "",
@@ -41,7 +41,7 @@ export const ContactPage = () => {
       message: "",
       price: "",
     });
-    setSubmitting(false)
+    setSubmitting(false);
   };
 
   return (
@@ -50,7 +50,7 @@ export const ContactPage = () => {
       <div className="flex mt-16 items-center justify-center min-h-screen bg-primary">
         <div className="flex bg-white rounded-lg shadow-lg overflow-hidden">
           <img
-            src={blogImage}
+            src="https://media.istockphoto.com/id/1271752802/photo/phone-and-e-mail-icons-on-wooden-cubes-with-contact-us-text-on-blue-background-web-page.jpg?s=612x612&w=0&k=20&c=dk9oPaDy_L9mv_icOMgsFGzEDrX0NUI3I8xBQ-DAxQM="
             alt="contact"
             className="w-3/5 object-cover hidden md:block"
           />
@@ -131,7 +131,7 @@ export const ContactPage = () => {
                 disabled={isSubmitting}
                 className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
               >
-                {isSubmitting ? "Submitting...": "Submit"}
+                {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </form>
           </div>

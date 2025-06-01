@@ -12,10 +12,23 @@ export const SocialStats = () => {
       icon: (
         <YouTubeIcon style={{ fontSize: 40 }} className="text-red-600 mb-2" />
       ),
-      url: "https://www.youtube.com/@yourchannel",
+      url: "https://www.youtube.com/taknikiniga",
       btnLabel: "Subscribe",
       btnClass: "bg-red-600 hover:bg-red-900",
       textColor: "text-red-600",
+    },
+
+    {
+      name: "Linkedin",
+      count: "550K+",
+      label: "followers",
+      icon: (
+        <LinkedInIcon style={{ fontSize: 50 }} className="text-blue-900 mb-2" />
+      ),
+      url: "https://www.linkedin.com/in/abhinash-singh-7b2960140?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      btnLabel: "Follow",
+      btnClass: "bg-blue-900 hover:bg-blue-400",
+      textColor: "text-blue-900",
     },
     {
       name: "Instagram",
@@ -27,27 +40,24 @@ export const SocialStats = () => {
           className="text-pink-800 mb-2"
         />
       ),
-      url: "https://www.instagram.com/yourusername",
+      url: "https://www.instagram.com/takniki_niga",
       btnLabel: "Follow",
       btnClass: "bg-pink-800 hover:bg-pink-600",
       textColor: "text-pink-800",
     },
-    {
-      name: "Linkedin",
-      count: "550K+",
-      label: "followers",
-      icon: (
-        <LinkedInIcon style={{ fontSize: 50 }} className="text-blue-900 mb-2" />
-      ),
-      url: "https://www.instagram.com/yourusername",
-      btnLabel: "Follow",
-      btnClass: "bg-blue-900 hover:bg-blue-400",
-      textColor: "text-blue-900",
-    },
   ];
 
   return (
-    <div className="bg-[#d9e1f7] text-center py-16 px-4">
+    <div
+      className="text-center py-16 px-4"
+      style={{
+        backgroundImage:
+          "url('https://static.vecteezy.com/system/resources/thumbnails/003/557/257/small_2x/abstract-blue-and-gray-wave-background-free-vector.jpg')",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <h2 className="text-2xl md:text-3xl md:text-4xl font-bold text-gray-800 mb-12">
         Connect with Us on Social Media!
       </h2>
@@ -56,7 +66,7 @@ export const SocialStats = () => {
         {platforms.map((platform, index) => (
           <div
             key={index}
-            className="bg-white p-8 rounded-xl hover:shadow-md transition flex flex-col items-center shadow-border-color"
+            className="p-8 rounded-xl hover:shadow-md transition flex flex-col items-center shadow-border-color"
           >
             {platform.icon}
             <p className="text-lg text-gray-600 mb-1 font-medium">

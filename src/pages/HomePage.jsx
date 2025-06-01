@@ -7,7 +7,6 @@ import { Navbar } from "../components/Navbar";
 import { SocialStats } from "../sections/SocialStats";
 import { SourceCodeSlider } from "../sections/SourceCodeSlider";
 import { ReviewsSection } from "../sections/ReviewsSection";
-// import { PeopleReviews } from "../components/PeopleReviews";
 
 export const HomePage = () => {
   return (

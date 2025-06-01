@@ -11,7 +11,10 @@ export const CoursesPage = () => {
   // Calculate the current courses to display
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = courseData.slice(indexOfFirstCourse, indexOfLastCourse);
+  const currentCourses = courseData.slice(
+    indexOfFirstCourse,
+    indexOfLastCourse
+  );
 
   // Pagination logic
   const totalPages = Math.ceil(courseData.length / coursesPerPage);
@@ -39,7 +42,11 @@ export const CoursesPage = () => {
 
     // Page numbers
     for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      ) {
         paginationButtons.push(
           <button
             key={i}
@@ -105,9 +112,7 @@ export const CoursesPage = () => {
         </div>
 
         {/* Pagination Controls */}
-        <div className="flex justify-center mt-6">
-          {renderPagination()}
-        </div>
+        <div className="flex justify-center mt-6">{renderPagination()}</div>
       </div>
     </>
   );

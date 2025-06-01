@@ -5,7 +5,8 @@ import ChildSourceCodeCard from "../components/ChildSourceCodeCard";
 export const SourceCodePage = () => {
   const sourceCodeData = [
     {
-      image: "https://a.storyblok.com/f/122804/1600x1000/d8bafe91e5/system-software.webp",
+      image:
+        "https://a.storyblok.com/f/122804/1600x1000/d8bafe91e5/system-software.webp",
       title: "Whats ChatBot Pro - send automatically...",
       author: "bhansalisoft",
       platform: "Windows",
@@ -15,10 +16,11 @@ export const SourceCodePage = () => {
       ratings: 0,
       reviews: 0,
       isDiscounted: true,
-      id:1
+      id: 1,
     },
     {
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZxx63qKZN1chY88OMkQF1_cW-tVTGJpQFXg&s",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZxx63qKZN1chY88OMkQF1_cW-tVTGJpQFXg&s",
       title: "Google Maps Advance Business Extractor",
       author: "bhansalisoft",
       platform: "Windows",
@@ -28,7 +30,7 @@ export const SourceCodePage = () => {
       ratings: 4,
       reviews: 38,
       isDiscounted: true,
-      id:2
+      id: 2,
     },
     // Add more items as needed
   ];

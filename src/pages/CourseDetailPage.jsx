@@ -7,14 +7,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Navbar } from "../components/Navbar";
 import ShareIcon from "@mui/icons-material/Share";
-import { Tooltip, IconButton} from "@mui/material";
+import { Tooltip, IconButton } from "@mui/material";
 import { initiatePayment } from "../utils/paymentUtils";
+import VideoPlayer from "../components/VideoPlayer";
 
 export const CourseDetailPage = () => {
   const { courseId } = useParams();
   const dispatch = useDispatch();
   const [course, setCourse] = useState(null);
   const [openSectionId, setOpenSectionId] = useState(null);
+  const [activeVideoUrl, setActiveVideoUrl] = useState("");
 
   useEffect(() => {
     const getOneCourseData = async () => {
@@ -63,8 +65,6 @@ export const CourseDetailPage = () => {
         );
       });
   };
-
-  
 
   return (
     <>
@@ -129,9 +129,12 @@ export const CourseDetailPage = () => {
                                 <a
                                   onClick={() => {
                                     // setActiveVideoUrl(lecture.videoUrl);
-                                    // setActiveLectureTitle(
-                                    //   lecture.lecture_title
-                                    // );
+                                    setActiveVideoUrl(
+                                      "https://www.youtube.com/watch?v=_zSZXBdYOjc"
+                                    );
+                                    setActiveLectureTitle(
+                                      lecture.lecture_title
+                                    );
                                   }}
                                   className="flex-1 cursor-pointer"
                                 >
@@ -148,6 +151,13 @@ export const CourseDetailPage = () => {
                 </ul>
               </div>
             </div>
+
+            {activeVideoUrl && (
+              <VideoPlayer
+                activeVideoUrl={activeVideoUrl}
+                setActiveVideoUrl={setActiveVideoUrl}
+              />
+            )}
 
             {/* Right Section */}
             <div className="space-y-6">

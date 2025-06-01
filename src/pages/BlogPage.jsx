@@ -39,7 +39,11 @@ export const BlogPage = () => {
 
     // Page numbers
     for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      ) {
         paginationButtons.push(
           <button
             key={i}
@@ -97,9 +101,7 @@ export const BlogPage = () => {
         </div>
 
         {/* Pagination Controls */}
-        <div className="flex justify-center mt-6">
-          {renderPagination()}
-        </div>
+        <div className="flex justify-center mt-6">{renderPagination()}</div>
       </div>
     </>
   );

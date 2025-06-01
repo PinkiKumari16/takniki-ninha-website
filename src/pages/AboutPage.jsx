@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-// import CustomYouTubePlayer from "../components/CustomYouTubePlayer";
 
 const data = [
   {
@@ -23,8 +22,8 @@ const data = [
 const contentViewData = [
   {
     name: "Pinki Kumari",
-    designation:"Mern Stack Developer",
-    specilist:"Website Specialist",
+    designation: "Mern Stack Developer",
+    specilist: "Website Specialist",
     views:
       "We believe not just in growing bigger, but in growing better. And growing better means aligning the success of your own business with the success of your customers. Win-win!",
     image:
@@ -32,14 +31,13 @@ const contentViewData = [
   },
   {
     name: "Rinki Kumari",
-    designation:"Front End Developer",
-    specilist:"UI Specialist",
+    designation: "Front End Developer",
+    specilist: "UI Specialist",
     views:
       "We believe not just in growing bigger, but in growing better. And growing better means aligning the success of your own business with the success of your customers. Win-win!",
     image:
       "https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg",
   },
-  
 ];
 export const AboutPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -54,7 +52,7 @@ export const AboutPage = () => {
       prevIndex === 0 ? data.length - 1 : prevIndex - 1
     );
   };
-   const nextViewContent = () => {
+  const nextViewContent = () => {
     setViewContentIndex((prevIndex) => (prevIndex + 1) % data.length);
   };
 
@@ -168,16 +166,26 @@ export const AboutPage = () => {
             {/* view content */}
             <div className="border border-gray-300 rounded-xl w-2/5 text-center flex flex-col gap-6 py-3 relative">
               <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 w-28 h-28 border-4 border-white rounded-full bg-amber-200 overflow-hidden shadow-md">
-                <img src={contentViewData[viewContentIndex].image} alt="viewer image" className="w-full h-full object-cover"/>
+                <img
+                  src={contentViewData[viewContentIndex].image}
+                  alt="viewer image"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <p className="pt-16 px-4">
                 {contentViewData[viewContentIndex].views}
               </p>
-              <hr className="border-gray-300"/>
+              <hr className="border-gray-300" />
               <div>
-                <h1 className="text-xl font-semibold">{contentViewData[viewContentIndex].name}</h1>
-                <h3 className="text-gray-500">{contentViewData[viewContentIndex].designation}</h3>
-                <p className="font-semibold">{contentViewData[viewContentIndex].specilist}</p>
+                <h1 className="text-xl font-semibold">
+                  {contentViewData[viewContentIndex].name}
+                </h1>
+                <h3 className="text-gray-500">
+                  {contentViewData[viewContentIndex].designation}
+                </h3>
+                <p className="font-semibold">
+                  {contentViewData[viewContentIndex].specilist}
+                </p>
               </div>
             </div>
             <div

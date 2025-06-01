@@ -13,7 +13,7 @@ export const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("user form data", formData);
-    setFormData({ email: "", password: "" }); // Reset form
+    setFormData({ email: "", password: "" });
   };
 
   return (

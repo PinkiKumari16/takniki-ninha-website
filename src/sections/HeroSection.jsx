@@ -5,12 +5,12 @@ export const HeroSection = ({ type = "color", bgSources = [] }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRefs = useRef([]);
 
-  // Initialize refs for videos
   useEffect(() => {
-    videoRefs.current = bgSources.map((_, i) => videoRefs.current[i] || React.createRef());
+    videoRefs.current = bgSources.map(
+      (_, i) => videoRefs.current[i] || React.createRef()
+    );
   }, [bgSources]);
 
-  // Slideshow logic
   useEffect(() => {
     let interval;
 
@@ -56,11 +56,11 @@ export const HeroSection = ({ type = "color", bgSources = [] }) => {
   const handleVideoOffClick = () => {
     const currentVideo = videoRefs.current[currentIndex]?.current;
     if (currentVideo) {
-      currentVideo.pause(); // Pause full-screen mode
+      currentVideo.pause();
       currentVideo.currentTime = 0;
       currentVideo.muted = true;
       currentVideo.controls = false;
-      currentVideo.play(); // Resume muted background loop
+      currentVideo.play();
     }
     setIsVideoPlaying(false);
   };
@@ -110,7 +110,7 @@ export const HeroSection = ({ type = "color", bgSources = [] }) => {
 
       {/* Solid Color Fallback */}
       {type === "color" && (
-        <div className="absolute inset-0 bg-[#ffffff] opacity-100 z-0" />
+        <div className="absolute inset-0 bg-[#daf4fa] opacity-100 z-0" />
       )}
 
       {/* Foreground Content */}

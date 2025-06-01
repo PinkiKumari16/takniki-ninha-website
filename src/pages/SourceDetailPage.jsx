@@ -284,14 +284,12 @@ export const SourceDetailPage = () => {
 
           {/* Contact and Related Items */}
           <section className="bg-white rounded-2xl p-4 px-0 space-y-6">
-            
-              <h2 className="text-xl font-bold text-gray-800 mb-2">
-                ANY QUESTIONS?
-              </h2>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                {contact.message}
-              </p>
-          
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              ANY QUESTIONS?
+            </h2>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {contact.message}
+            </p>
 
             <div>
               <h3 className="text-md font-semibold text-blue-800 mb-1">

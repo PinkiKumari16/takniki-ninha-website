@@ -25,10 +25,12 @@ export const BlogDetailPage = () => {
         setContentData(response.data.contents[0]);
       }
     } catch (error) {
-      dispatch(setAlertData({
-        type:'error',
-        message: error
-      }))
+      dispatch(
+        setAlertData({
+          type: "error",
+          message: error,
+        })
+      );
     } finally {
       dispatch(hideLoading());
     }
@@ -45,10 +47,12 @@ export const BlogDetailPage = () => {
         setOpenSnackbar(true);
       })
       .catch((err) => {
-        dispatch(setAlertData({
-          type:'error',
-          message: err
-        }))
+        dispatch(
+          setAlertData({
+            type: "error",
+            message: err,
+          })
+        );
       });
   };
 
@@ -67,7 +71,6 @@ export const BlogDetailPage = () => {
               className="h-80 w-full object-cover rounded"
             />
 
-           
             {/* Blog Header Info */}
             <div className="mb-6">
               <p className="py-2 px-4 border-l-4 border-gray-300 italic text-xl text-gray-50">
