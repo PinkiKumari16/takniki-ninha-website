@@ -7,12 +7,14 @@ export const UserProfilePage = () => {
   const [purchases, setPurchases] = useState([]);
 
   useEffect(() => {
-    // Fetch user and purchases data (replace with real logic)
-    setUser({
-      name: "John Doe",
-      email: "john.doe@example.com",
-      avatar: "https://i.pravatar.cc/150?img=3",
-    });
+    const storeUser = localStorage.getItem("user");
+    if (storeUser) {
+      const parsedUser = JSON.parse(storeUser);
+      setUser({
+        ...parsedUser,
+        avatar: "https://i.pravatar.cc/150?img=3",
+      });
+    }
 
     setPurchases([
       { id: 1, title: "React Course", type: "Course" },
@@ -29,18 +31,16 @@ export const UserProfilePage = () => {
       <div className="mt-20 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Section - User Info */}
-          <div className="bg-white shadow-md rounded-lg p-6">
+          <div className="bg-primary text-white shadow-md rounded-lg p-6">
             <h1 className="text-3xl font-semibold mb-6 text-center">
               User Profile
             </h1>
-            <div className="flex flex-col items-center">
-              <img
-                src={user.avatar}
-                alt="User Avatar"
-                className="w-24 h-24 rounded-full mb-4"
-              />
+            <div className="flex flex-col items-center gap-2">
+              <div className="bg-blue-500 text-white text-4xl w-24 h-24 flex items-center justify-center rounded-full">
+                {user.name[0].toUpperCase()}
+              </div>
               <h2 className="text-xl font-semibold">{user.name}</h2>
-              <p className="text-gray-600">{user.email}</p>
+              <p className="text-gray-600 bg-gray-200 px-4 py-1 rounded-2xl">{user.email}</p>
             </div>
           </div>
 

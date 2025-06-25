@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "../redux/rootSlice";
+import axios from "axios";
 
 export const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,6 @@ export const RegistrationPage = () => {
     confirmPassword: "",
   });
 
-  const [registeredUsers, setRegisteredUsers] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,54 +20,74 @@ export const RegistrationPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const isStrongPassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    return regex.test(password);
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  // console.log(formData);
+  const { name, email, password, confirmPassword } = formData;
 
-    const { name, email, password, confirmPassword } = formData;
+  const form = new URLSearchParams();
+  form.append("name", name);
+  form.append("email", email);
+  form.append("password", password);
 
-    if (!isStrongPassword(password)) {
-      dispatch(
-        setAlertData({
-          type: "error",
-          message:
-            "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
-        })
-      );
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      dispatch(
-        setAlertData({
-          type: "error",
-          message: "Passwords do not match.",
-        })
-      );
-      return;
-    }
-
-    // Simulate saving user
-    setRegisteredUsers((prev) => [...prev, { name, email }]);
+  if (password !== confirmPassword) {
     dispatch(
       setAlertData({
-        type: "success",
-        message: "Registration successful!",
+        type: "error",
+        message: "Passwords do not match.",
       })
     );
+    return;
+  }
 
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    navigate("/login");
-  };
+  try {
+    const response = await axios.post(
+    "https://abhinash.itflyweb.cloud/api/registration.php",
+    form,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+    // console.log(response.data);
+
+    if (response.data.success) {
+      dispatch(
+        setAlertData({
+          type: "success",
+          message: `${response.data.name} has ${response.data.message}`,
+        })
+      );
+
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      navigate("/login");
+    } else {
+      dispatch(
+        setAlertData({
+          type: "error",
+          message: response.data.message || "Registration failed.",
+        })
+      );
+    }
+  } catch (error) {
+    // console.log(error);
+    dispatch(
+      setAlertData({
+        type: "error",
+        message:
+          error.response?.data?.message || "Something went wrong. Try again.",
+      })
+    );
+  }
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-primary border-2 border-border-color">

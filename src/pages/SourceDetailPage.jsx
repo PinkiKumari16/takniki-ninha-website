@@ -82,7 +82,7 @@ const hrmsContent = {
     "JWT Auth",
   ],
   contact: {
-    email: "suriken.apps.codecanyon@gmail.com",
+    email: "support@taknikiniga.com",
     message:
       "Thanks for your interest in our app. We’d be happy to help you if you have any questions regarding our app. If you have a more general question related to CodeCanyon, you might consider visiting the forums and asking your question in the “Item Discussion” section.",
   },

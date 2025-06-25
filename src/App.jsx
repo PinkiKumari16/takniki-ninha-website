@@ -84,7 +84,7 @@ function App() {
         </Routes>
         {/* <Footer /> */}
         <div
-          className="fixed bottom-5 right-5 text-blue-600 p-5 bg-gray-200 shadow-2xl shadow-border-color rounded-full"
+          className="fixed bottom-5 right-5 text-blue-600 p-5 bg-gray-200 shadow-2xl shadow-border-color rounded-full z-100"
           onClick={() => setIsReviewFormShow(!isReviewFormShow)}
         >
           <RateReviewIcon
@@ -92,7 +92,6 @@ function App() {
               fontSize: "3rem", // large size
               animation: "zoomInOut 1.5s infinite ease-in-out",
               cursor: "pointer",
-              zIndex: 1000,
             }}
             titleAccess="Write a Review "
           />

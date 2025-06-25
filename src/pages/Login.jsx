@@ -1,19 +1,52 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setAlertData } from "../redux/rootSlice";
+import axios from "axios";
 
 export const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("user form data", formData);
-    setFormData({ email: "", password: "" });
+    try {
+      const response = await axios.post(
+        "https://abhinash.itflyweb.cloud/api/login.php",
+        formData
+      );
+      // console.log(response.data)
+      const { token, user, message } = response.data;
+
+      // Save token & user info
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      dispatch(
+        setAlertData({
+          type: "success",
+          message: message || "Login successful!",
+        })
+      );
+      navigate(`/user-profile/${user.id}`);
+    } catch (error) {
+      // console.log(error)
+      const errMsg = error.response?.data?.message || "Login failed!";
+      dispatch(
+        setAlertData({
+          type: "error",
+          message: errMsg,
+        })
+      );
+    } finally {
+      setFormData({ email: "", password: "" });
+    }
   };
 
   return (

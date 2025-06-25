@@ -113,4 +113,19 @@ button{
   }
 }
 
-/*  */
+/* Utility classes for shapes */
+.shape-float {
+  animation: floatUpDown 6s ease-in-out infinite;
+}
+
+.shape-rotate {
+  animation: rotateShape 20s linear infinite;
+}
+
+.shape-pulse {
+  animation: pulseShape 4s ease-in-out infinite;
+}
+
+.shape-slide {
+  animation: slideInOut 8s ease-in-out infinite;
+}

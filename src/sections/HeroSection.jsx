@@ -110,7 +110,7 @@ export const HeroSection = ({ type = "color", bgSources = [] }) => {
 
       {/* Solid Color Fallback */}
       {type === "color" && (
-        <div className="absolute inset-0 bg-[#daf4fa] opacity-100 z-0" />
+        <div className="absolute inset-0 bg-blue-100 opacity-100 z-0" />
       )}
 
       {/* Foreground Content */}
