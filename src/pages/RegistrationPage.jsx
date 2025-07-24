@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "../redux/rootSlice";
 import axios from "axios";
@@ -14,6 +14,10 @@ export const RegistrationPage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const fromUrl = params.get("from"); 
+  // console.log("from url of course: ",fromUrl);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,7 +72,8 @@ const handleSubmit = async (e) => {
         confirmPassword: "",
       });
 
-      navigate("/login");
+      // navigate("/login");
+      navigate(`/login?from=${fromUrl || ""}`);
     } else {
       dispatch(
         setAlertData({

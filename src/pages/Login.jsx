@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { setAlertData } from "../redux/rootSlice";
 import axios from "axios";
 
 export const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const fromUrl = params.get("from"); 
+  // console.log("from url of course: ",fromUrl);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -22,21 +26,35 @@ export const Login = () => {
         formData
       );
       // console.log(response.data)
-      const { token, user, message } = response.data;
+      if(response.data.success){
+        const { token, user, message } = response.data;
 
-      // Save token & user info
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+        // Save token & user info
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
 
-      dispatch(
-        setAlertData({
-          type: "success",
-          message: message || "Login successful!",
-        })
-      );
-      navigate(`/user-profile/${user.id}`);
+        dispatch(
+          setAlertData({
+            type: "success",
+            message: message || "Login successful!",
+          })
+        );
+
+        // Redirect back to course detail or profile
+        navigate(fromUrl || `/user-profile/${user.id}`);
+        // navigate(`/user-profile/${user.id}`);
+      }
+      else{
+        dispatch(
+          setAlertData({
+            type: "error",
+            message: response.data.message || "Login Failed!",
+          })
+        );
+      }
+      
     } catch (error) {
-      // console.log(error)
+      console.log(error)
       const errMsg = error.response?.data?.message || "Login failed!";
       dispatch(
         setAlertData({
@@ -81,7 +99,7 @@ export const Login = () => {
           </button>
           <p
             className="text-center text-blue-600 hover:text-primary cursor-pointer underline"
-            onClick={() => navigate("/registration")}
+            onClick={() => navigate(`/registration?from=${fromUrl || ""}`)}
           >
             Don't have an account? Register here
           </p>

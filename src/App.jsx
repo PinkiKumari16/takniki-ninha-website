@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { CoursesPage } from "./pages/CoursesPage";
 import { CourseDetailPage } from "./pages/CourseDetailPage";
+// import { ReVerificationPaymentPage } from "./pages/ReVerificationPaymentPage";
 import { BlogPage } from "./pages/BlogPage";
 import { ContactPage } from "./pages/ContactPage";
 import { SourceCodePage } from "./pages/SourceCodePage";
@@ -26,6 +27,8 @@ import { UserProfilePage } from "./pages/UserProfilePage";
 import { SourceDetailPage } from "./pages/SourceDetailPage";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import { ReviewForm } from "./components/ReviewForm";
+import { ReVerificationPaymentPage} from "./pages/ReVerificationPaymentPage";
+
 
 function App() {
   const { loading, blogData, courseData } = useSelector((state) => state.root);
@@ -73,7 +76,9 @@ function App() {
             path="/source-code/:sourceCodeId"
             element={<SourceDetailPage />}
           />
+          {/*/:courseId  */}
           <Route path="/courses/:courseId" element={<CourseDetailPage />} />
+          <Route path="/reverify-payment/:courseId" element={<ReVerificationPaymentPage />} />
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/blogs/:blogId" element={<BlogDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { hideLoading, setAlertData, showLoading } from "../redux/rootSlice";
 import axios from "axios";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -8,12 +8,13 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Navbar } from "../components/Navbar";
 import ShareIcon from "@mui/icons-material/Share";
 import { Tooltip, IconButton } from "@mui/material";
-import { initiatePayment } from "../utils/paymentUtils";
 import VideoPlayer from "../components/VideoPlayer";
+import { parse } from "postcss";
 
 export const CourseDetailPage = () => {
   const { courseId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [openSectionId, setOpenSectionId] = useState(null);
   const [activeVideoUrl, setActiveVideoUrl] = useState("");
@@ -44,7 +45,6 @@ export const CourseDetailPage = () => {
 
     getOneCourseData();
   }, [courseId]);
-
   const handleShareClick = () => {
     navigator.clipboard
       .writeText(window.location.href)
@@ -64,6 +64,22 @@ export const CourseDetailPage = () => {
           })
         );
       });
+  };
+  const handleBuyClick = () => {
+    const user = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+
+    if (user && token) {
+      navigate("/reverify-payment/" + courseId);
+    } else {
+      dispatch(
+        setAlertData({
+          type: "warning",
+          message: "Please login to purchase this course.",
+        })
+      );
+      navigate(`/login?from=/courses/${courseId}`);
+    }
   };
 
   return (
@@ -189,9 +205,12 @@ export const CourseDetailPage = () => {
 
                   <button
                     className="text-xl font-bold w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-900"
-                    onClick={() =>
-                      initiatePayment(dispatch, course.discounted_price)
-                    }
+                    onClick={handleBuyClick}
+                    // onClick={() =>
+
+                    //   // initiatePayment(dispatch, course.discounted_price)
+                    //   navigate("/reverify-payment/" + courseId)
+                    // }
                   >
                     Buy Now
                   </button>

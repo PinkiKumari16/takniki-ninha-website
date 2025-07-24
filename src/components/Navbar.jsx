@@ -22,6 +22,7 @@ export const Navbar = () => {
     { name: "Blog", path: "/blogs" },
     { name: "About", path: "/about" },
     { name: "Contact Us", path: "/contact" },
+    //  { name: "Payment", path: "/reverify-payment"},
   ];
 
   useEffect(() => {
