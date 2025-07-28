@@ -53,36 +53,96 @@ export const ReVerificationPaymentPage = () => {
     fetchCourse();
   }, [courseId]);
 
-  const purchaseCourse = async (orderId, paymentId ) => {
-    // console.log("order id: ", orderId, "payment id : ", paymentId);
-    const user = JSON.parse(localStorage.getItem("user"));
+  // const purchaseCourse = async (orderId, paymentId) => {
+  //   console.log("order id: ", orderId, "payment id : ", paymentId);
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   console.log(user);
+  //   if (!user) {
+  //     console.error("User not logged in");
+  //     return;
+  //   }
 
+  //   const payload = {
+  //     name: user.name,
+  //     user_id: user.id,
+  //     email: user.email,
+  //     orderId: orderId,
+  //     paymentId: paymentId,
+  //     courseId: course.id,
+  //     courseName: course.title,
+  //   };
+
+  //   console.log("Sending purchase data:", payload);
+
+  //   try {
+  //     const res = await axios.post(
+  //       "https://abhinash.itflyweb.cloud/api/purchaseapi_insert.php",
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json"
+  //         }
+  //       }
+  //     );
+  //     console.log(res.data);
+  //     console.log("*************************************");
+  //     if (res.data.status === "success") {
+  //       console.log("✅ Purchase recorded:", res.data.message);
+  //       // Optional: redirect or show success message
+  //       // navigate(`/user-profile/${user.id}`);
+  //     } else {
+  //       console.warn("⚠️ Unexpected response:", res.data);
+  //     }
+  //   } catch (err) {
+  //     console.error("❌ Failed to record purchase:", err);
+  //   }
+  // };
+
+  const purchaseCourse = async (orderId, paymentId) => {
+    console.log("order id: ", orderId, "payment id : ", paymentId);
+    const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       console.error("User not logged in");
       return;
     }
 
     const payload = {
-      "name": user.name,
-      "user_id": user.id,
-      "email": user.email,
-      "orderId": orderId,
-      "paymentId": paymentId,
-      "courseId": course.id,
-      "courseName": course.title,
+      name: user.name,
+      user_id: user.id,
+      email: user.email,
+      orderId: orderId,
+      paymentId: paymentId,
+      courseId: course.id,
+      courseName: course.title,
     };
-    console.log(payload);
+
+    console.log("Sending purchase data:", payload);
 
     try {
-      const res = await axios.post(
-        "https://abhinash.itflyweb.cloud/api/purchaseapi_insert.php",
-        {payload}
+      const response = await axios.post(
+        "https://abhinash.itflyweb.cloud/api/purchaseapi_insert.php",payload
       );
-      console.log("✅ Purchase saved:", res.data);
-      // navigate(`/user-profile/${user.id}`);
-      // return res.data;
+      // console.log(response.data);
+      if (response.data.status === "success") {
+        console.log("✅ Purchase recorded:", response.data.message);
+        dispatch(
+          setAlertData({
+            type: "success",
+            message: response.data.message,
+          })
+        );
+        navigate(`/user-profile/${user.id}`); // optional
+      } else {
+        console.warn("⚠️ Unexpected response:", response.data);
+      }
     } catch (err) {
-      console.error("❌ Failed to record purchase", err);
+      console.error("❌ Failed to record purchase:", err);
+      dispatch(
+        setAlertData({
+          type: "error",
+          message: err,
+        })
+      );
     }
   };
 
@@ -113,23 +173,16 @@ export const ReVerificationPaymentPage = () => {
           );
           return;
         }
-        initiatePayment(dispatch, finalAmount, apiKey, async (paymentId) => {
-          // console.log("🎉 Payment successful. Payment ID:", paymentId);
-          await purchaseCourse(orderId, paymentId);
-        });
-        // ✅ Trigger Razorpay and capture payment ID
-        // initiatePayment(
-        //   dispatch,
-        //   finalAmount,
-        //   orderId,
-        //   apiKey
-        //   // async (paymentId) => {
-        //   //   console.log("🎉 Payment successful. Payment ID:", paymentId);
-
-        //   //   // ✅ Now call purchaseCourse after payment success
-        //   //   
-        //   // }
-        // )
+        initiatePayment(
+          dispatch,
+          finalAmount,
+          apiKey,
+          orderId,
+          async (paymentId) => {
+            // console.log("🎉 Payment successful. Payment ID:", paymentId);
+            await purchaseCourse(orderId, paymentId);
+          }
+        );
       } else {
         dispatch(
           setAlertData({

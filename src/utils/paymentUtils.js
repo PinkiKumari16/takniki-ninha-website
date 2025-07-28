@@ -1,6 +1,6 @@
 import { setAlertData } from "../redux/rootSlice";
 
-export const initiatePayment = (dispatch, amount, apiKey, onSuccess) => {
+export const initiatePayment = (dispatch, amount, apiKey,orderId, onSuccess) => {
   if (!window.Razorpay) {
     dispatch(
       setAlertData({
@@ -15,6 +15,7 @@ export const initiatePayment = (dispatch, amount, apiKey, onSuccess) => {
   const options = {
     key: apiKey,
     amount: amount * 100,
+    orderId: orderId,
     currency: "INR",
     name: "Acme Corp",
     description: "This is a test payment",

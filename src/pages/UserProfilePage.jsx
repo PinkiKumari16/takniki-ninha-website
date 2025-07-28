@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setAlertData } from "../redux/rootSlice";
+import { hideLoading, setAlertData, showLoading } from "../redux/rootSlice";
+import { findNonSerializableValue } from "@reduxjs/toolkit";
 
 export const UserProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -19,10 +20,11 @@ export const UserProfilePage = () => {
         const userId = storedUser.id;
 
         try {
+          dispatch(showLoading());
           const res = await axios.get(
             `https://abhinash.itflyweb.cloud/api/getMycourses.php?user_id=${userId}`
           );
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.success && Array.isArray(res.data.data)) {
             setPurchases(res.data.data); // assuming the API returns 'data' array
           } else {
@@ -35,6 +37,8 @@ export const UserProfilePage = () => {
               message: "Failed to fetch course data: " + error.message,
             })
           );
+        }finally{
+          dispatch(hideLoading());
         }
       }
     };
@@ -73,14 +77,14 @@ export const UserProfilePage = () => {
             {/* Courses */}
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Purchased Courses</h2>
-              {courseList.length > 0 ? (
+              {purchases.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {courseList.map((item) => (
+                  {purchases.map((item) => (
                     <div
-                      key={item.id}
+                      key={item.pay_id}
                       className="border border-gray-200 rounded-lg p-4 hover:shadow"
                     >
-                      <h3 className="text-lg font-medium">{item.title}</h3>
+                      <h3 className="text-lg font-medium">{item.courseName}</h3>
                       <p className="text-sm text-gray-500">{item.type}</p>
                     </div>
                   ))}
