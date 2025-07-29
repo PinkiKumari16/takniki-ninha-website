@@ -53,51 +53,6 @@ export const ReVerificationPaymentPage = () => {
     fetchCourse();
   }, [courseId]);
 
-  // const purchaseCourse = async (orderId, paymentId) => {
-  //   console.log("order id: ", orderId, "payment id : ", paymentId);
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   console.log(user);
-  //   if (!user) {
-  //     console.error("User not logged in");
-  //     return;
-  //   }
-
-  //   const payload = {
-  //     name: user.name,
-  //     user_id: user.id,
-  //     email: user.email,
-  //     orderId: orderId,
-  //     paymentId: paymentId,
-  //     courseId: course.id,
-  //     courseName: course.title,
-  //   };
-
-  //   console.log("Sending purchase data:", payload);
-
-  //   try {
-  //     const res = await axios.post(
-  //       "https://abhinash.itflyweb.cloud/api/purchaseapi_insert.php",
-  //       payload,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json"
-  //         }
-  //       }
-  //     );
-  //     console.log(res.data);
-  //     console.log("*************************************");
-  //     if (res.data.status === "success") {
-  //       console.log("✅ Purchase recorded:", res.data.message);
-  //       // Optional: redirect or show success message
-  //       // navigate(`/user-profile/${user.id}`);
-  //     } else {
-  //       console.warn("⚠️ Unexpected response:", res.data);
-  //     }
-  //   } catch (err) {
-  //     console.error("❌ Failed to record purchase:", err);
-  //   }
-  // };
-
   const purchaseCourse = async (orderId, paymentId) => {
     console.log("order id: ", orderId, "payment id : ", paymentId);
     const user = JSON.parse(localStorage.getItem("user"));
@@ -120,7 +75,7 @@ export const ReVerificationPaymentPage = () => {
 
     try {
       const response = await axios.post(
-        "https://abhinash.itflyweb.cloud/api/purchaseapi_insert.php",payload
+        "https://abhinash.itflyweb.cloud/api/purchaseapi_insert.php", payload
       );
       // console.log(response.data);
       if (response.data.status === "success") {
@@ -131,7 +86,7 @@ export const ReVerificationPaymentPage = () => {
             message: response.data.message,
           })
         );
-        navigate(`/user-profile/${user.id}`); // optional
+        navigate(`/user-profile/${user.id}`);
       } else {
         console.warn("⚠️ Unexpected response:", response.data);
       }
